@@ -1,0 +1,56 @@
+{% extends 'food/base.html' %}
+{% load static %}
+
+{% block title %} Burgers {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        {% for burger in burgers %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ burger.imageb.url }}" class="card-img-top" alt="{{ burger.name }}">
+                <div class="card-body">
+                    <h5 class="card-title" id="bur{{ burger.id }}">{{ burger.name }}</h5>
+                    <p class="card-text">{{ burger.description }}</p>
+
+                    <!-- Size Selection -->
+                    <div class="form-group">
+                        <label>Select Size:</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="size{{ burger.id }}" id="medium{{ burger.id }}" value="M" checked>
+                            <label class="form-check-label" for="medium{{ burger.id }}">M - &pound;{{ burger.price_m }}</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="size{{ burger.id }}" id="large{{ burger.id }}" value="L">
+                            <label class="form-check-label" for="large{{ burger.id }}">L - &pound;{{ burger.price_l }}</label>
+                        </div>
+                    </div>
+
+                    <!-- Add to Cart Button -->
+                    <button class="btn btn-primary btn-sm add-to-cart"
+                            data-type="burger"
+                            data-id="{{ burger.id }}"
+                            data-name="{{ burger.name }}"
+                            data-price="{{ burger.price }}"
+                            data-price-m="{{ burger.price_m }}"
+                            data-price-l="{{ burger.price_l }}"
+                            data-image="{{ burger.imageb.url }}">
+                        Add Burger
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="col-md-4 orders">
+        <div class="bg-info p-4 rounded">
+            <div class="col-md-12">
+                <h2>Order List</h2>
+                <ul id="order-list"></ul>
+                <h2>Total &pound;<span id="order-total">0</span></h2>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
